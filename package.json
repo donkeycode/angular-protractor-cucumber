@@ -1,5 +1,5 @@
 {
-  "name": "donkeycode-cucumber-tools",
+  "name": "angular-protractor-cucumber",
   "version": "0.1.0",
   "description": "A collection of sentences for cucumber js",
   "main": "index.js",
