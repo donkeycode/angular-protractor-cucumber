@@ -1,0 +1,11 @@
+{
+  "name": "donkeycode-cucumber-tools",
+  "version": "0.1.0",
+  "description": "A collection of sentences for cucumber js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cedric LOMBARDOT <cedric@donkeycode.com>",
+  "license": "MIT"
+}
