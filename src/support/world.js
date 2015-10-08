@@ -57,7 +57,7 @@ module.exports = function () {
                     context.setCurrentPageInstance(pageInstance);
 
                     // we had test-mode class on body for specifics CSS rules (i.e. hide relative footer)
-                    browser.executeScript('$("body").addClass("test-mode");').then(function () {
+                    browser.executeScript('document.querySelector("body").classList.add("test-mode");').then(function () {
                         _this.isOnPage(pageInstance, callback);
                     });
                 });
