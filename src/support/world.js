@@ -53,7 +53,7 @@ module.exports = function () {
                     finalUrl = finalUrl.replace(new RegExp("/:" + paramName + "$", "g"), "/" + params[paramName]);
                 }
 
-                browser.get('#/' + finalUrl).then(function () {
+                browser.get(finalUrl).then(function () {
                     context.setCurrentPageInstance(pageInstance);
 
                     // we had test-mode class on body for specifics CSS rules (i.e. hide relative footer)
@@ -76,14 +76,13 @@ module.exports = function () {
             var _this = this;
 
             browser.getCurrentUrl().then(function (url) {
-                var splittedUrl = url.split("/#/");
 
-                var urlReg = new RegExp('^' + pageInstance.url.replace(/:[^\/]+/g, '(.+)').replace(/\//g, '\\/') + '$');
+                var urlReg = new RegExp('\/' + pageInstance.url.replace(/:[^\/]+/g, '(.+)').replace(/\//g, '\\/') + '$');
 
-                if (urlReg.test(splittedUrl[1]) === true) {
+                if (urlReg.test(url) === true) {
                     _this.delayCallback(callback);
                 } else {
-                    _this.handleError("isOnPage fails, pageInstance.url: " + pageInstance.url + ", url: " + url + ", splittedUrl: " + splittedUrl[1] + ", RegExp: " + urlReg.toString(), callback);
+                    _this.handleError("isOnPage fails, pageInstance.url: " + pageInstance.url + ", url: " + url + ", s RegExp: " + urlReg.toString(), callback);
                 }
             });
 
