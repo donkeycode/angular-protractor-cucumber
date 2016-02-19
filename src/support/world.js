@@ -53,7 +53,11 @@ module.exports = function () {
                     finalUrl = finalUrl.replace(new RegExp("/:" + paramName + "$", "g"), "/" + params[paramName]);
                 }
 
-                browser.get('#/' + finalUrl).then(function () {
+                if (config.getAngularMode() === 'default') {
+                    finalUrl = '#/' + finalUrl;
+                }
+
+                browser.get(finalUrl).then(function () {
                     context.setCurrentPageInstance(pageInstance);
 
                     // we had test-mode class on body for specifics CSS rules (i.e. hide relative footer)
@@ -77,6 +81,10 @@ module.exports = function () {
 
             browser.getCurrentUrl().then(function (url) {
                 var splittedUrl = url.split("/#/");
+
+                if (config.getAngularMode() === 'html5mode') {
+                    splittedUrl = url.replace(/:\/\//, '[dash]').split("/");
+                }
 
                 var urlReg = new RegExp('^' + pageInstance.url.replace(/:[^\/]+/g, '(.+)').replace(/\//g, '\\/') + '$');
 

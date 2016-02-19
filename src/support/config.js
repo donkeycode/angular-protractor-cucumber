@@ -32,6 +32,14 @@ module.exports = function Config() {
         },
 
         /**
+         * Returns running routing mode (default /#/) can set to html5mode
+         * @returns {string}
+         */
+        getAngularMode: function () {
+            return this.getArgv('angularMode') || 'default';
+        },
+
+        /**
         * Get argument value in arv
         * @param {string} name of argument
         * @return undefinded if not found or agument value
