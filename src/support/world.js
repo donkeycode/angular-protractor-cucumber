@@ -83,7 +83,7 @@ module.exports = function () {
                 var splittedUrl = url.split("/#/");
 
                 if (config.getAngularMode() === 'html5mode') {
-                    splittedUrl = url.replace(/:\/\//, '[dash]').split("/");
+                    splittedUrl = url.replace(/:\/\//, '[dash]').split(/\/(.+)/);
                 }
 
                 var urlReg = new RegExp('^' + pageInstance.url.replace(/:[^\/]+/g, '(.+)').replace(/\//g, '\\/') + '$');
