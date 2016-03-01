@@ -62,9 +62,10 @@ module.exports = function FormSteps() {
         var elementFinder = element(by.css(fieldIdSelector));
 
         _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
-            elementFinder.clear().sendKeys(fieldValue);
-
-            _this.delayCallback(callback);
+            elementFinder.clear().sendKeys(fieldValue).then(function(){
+                _this.delayCallback(callback);
+            });
+            
         }, function isPresentAndDisplayedError(errorMessage) {
             _this.handleError(errorMessage, callback);
         });
