@@ -40,6 +40,14 @@ module.exports = function Config() {
         },
 
         /**
+         * Remove trailing slashes
+         * @returns {string}
+         */
+        removeTrailingSlash: function () {
+            return this.getArgv('removeTrailingSlash') || 'default';
+        },
+
+        /**
         * Get argument value in arv
         * @param {string} name of argument
         * @return undefinded if not found or agument value

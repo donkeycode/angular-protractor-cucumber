@@ -84,6 +84,11 @@ module.exports = function () {
 
                 if (config.getAngularMode() === 'html5mode') {
                     splittedUrl = url.replace(/:\/\//, '[dash]').split(/\/(.+)/);
+                    if (config.removeTrailingSlash() && url.slice(-1) === "/") {
+                        url = url.replace(/\/$/, '');
+                        splittedUrl = url.replace(/:\/\//, '[dash]').split(/\/(.+)/);
+                        splittedUrl.push("");
+                    }
                 }
 
                 var urlReg = new RegExp('^' + pageInstance.url.replace(/:[^\/]+/g, '(.+)').replace(/\//g, '\\/') + '$');
