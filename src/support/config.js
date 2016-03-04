@@ -43,8 +43,8 @@ module.exports = function Config() {
          * Remove trailing slashes
          * @returns {string}
          */
-        removeTrailingSlash: function () {
-            return this.getArgv('removeTrailingSlash') || 'default';
+        keepTrailingSlash: function () {
+            return this.getArgv('keepTrailingSlash') || false;
         },
 
         /**
