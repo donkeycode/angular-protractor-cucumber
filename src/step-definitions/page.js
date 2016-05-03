@@ -34,6 +34,38 @@ module.exports = function PageSteps() {
             _this.handleError(errorMessage, callback);
         });
     });
+    
+        /**
+     * See a button
+     */
+    this.Then(/^I should see the button "([^"]*)"$/, function (buttonName, callback) {
+        var _this = this;
+
+        var elementBinding = by.css(context.getCurrentPageInstance().getButtonByName(buttonName));
+        var elementFinder = element(elementBinding);
+
+        _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
+            _this.delayCallback(callback);
+        }, function isPresentAndDisplayedError(errorMessage) {
+            _this.handleError(errorMessage, callback);
+        });
+    });
+
+    /**
+     * Not see a button
+     */
+    this.Then(/^I should not see the button "([^"]*)"$/, function (buttonName, callback) {
+        var _this = this;
+
+        var elementBinding = by.css(context.getCurrentPageInstance().getButtonByName(buttonName));
+        var elementFinder = element(elementBinding);
+
+        _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
+            _this.handleError("Button found", callback);
+        }, function isPresentAndDisplayedError() {
+            _this.delayCallback(callback);
+        });
+    });
 
     /**
      * Click on a tab
