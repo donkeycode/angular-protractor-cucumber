@@ -19,13 +19,13 @@ module.exports = function () {
 
             elementFinder.isPresent().then(function isPresentSuccess(isPresent) {
                 if (isPresent === true) {
-                    browser.wait(elementFinder.isDisplayed, 5000).then(function isDisplayedSuccess(isVisible) {
+                    elementFinder.isDisplayed().then(function isDisplayedSuccess(isVisible) {
                         if (isVisible === true) {
                             deferred.resolve();
                         } else {
                             deferred.reject("Element is present but not visible. Binding: " + JSON.stringify(elementFinder.locator()) + ", currentPageInstance.url: " + context.getCurrentPageInstance().url);
                         }
-                    }, function isDisplayedTimeout() {
+                    }, function isDisplayedFailure() {
                         deferred.reject("Element is present but not visible. Binding: " + JSON.stringify(elementFinder.locator()) + ", currentPageInstance.url: " + context.getCurrentPageInstance().url);
                     });
                 } else {
