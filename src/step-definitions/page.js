@@ -35,7 +35,7 @@ module.exports = function PageSteps() {
         });
     });
     
-        /**
+    /**
      * See a button
      */
     this.Then(/^I should see the button "([^"]*)"$/, function (buttonName, callback) {
