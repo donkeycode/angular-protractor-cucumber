@@ -3,6 +3,7 @@ var fs = require('fs');
 var context = require('./context');
 var config = require('./config');
 var helperString = require('./helper/string');
+var dataGenerator = require('./helper/data-generator');
 
 
 module.exports = function () {
@@ -47,6 +48,7 @@ module.exports = function () {
             var _this = this;
 
             pageInstancePromise.then(function onPageLoaded(pageInstance) {
+
                 var finalUrl = pageInstance.url;
                 for (var paramName in params) {
                     finalUrl = finalUrl.replace(new RegExp("/:" + paramName + "/", "g"), "/" + params[paramName] + "/");
@@ -149,6 +151,19 @@ module.exports = function () {
             });
 
             return _this;
+        };
+
+        /**
+        * Generate values for fields
+        */
+        this.generateValue = function (fieldValue) {
+            if (fieldValue[0] != '@') {
+                return fieldValue;
+            }
+
+            var functionToCall = fieldValue.replace('@', 'dataGenerator.generate');
+
+            return eval(functionToCall);
         };
 
         // tell Cucumber we're finished and to use 'this' as the world instance

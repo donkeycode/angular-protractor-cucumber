@@ -34,7 +34,7 @@ module.exports = function PageSteps() {
             _this.handleError(errorMessage, callback);
         });
     });
-    
+
     /**
      * See a button
      */
@@ -50,7 +50,7 @@ module.exports = function PageSteps() {
             _this.handleError(errorMessage, callback);
         });
     });
-    
+
     /**
      * See a diabled button
      */
@@ -147,6 +147,7 @@ module.exports = function PageSteps() {
      */
     this.Then(/^I can see "([^"]*)" at line "([^"]*)"$/, function (valueObject, keyObject, callback) {
         var _this = this;
+        valueObject = _this.generateValue(valueObject);
 
         var keyBinding = by.css(context.getCurrentPageInstance().getFieldByName(keyObject));
         var elementFinder = element(keyBinding);
@@ -169,6 +170,7 @@ module.exports = function PageSteps() {
     */
     this.Then(/^I can see "([^"]*)" in element "([^"]*)"$/, function (valueObject, nameElement, callback) {
         var _this = this;
+        valueObject = _this.generateValue(valueObject);
 
         var keyBinding = by.css(context.getCurrentPageInstance().getElementByName(nameElement));
         var elementFinder = element(keyBinding);
@@ -191,6 +193,8 @@ module.exports = function PageSteps() {
     */
     this.Then(/^I can see "([^"]*)" for data "([^"]*)"$/,function (textWanted, keyName, callback) {
         var _this = this;
+
+        textWanted = _this.generateValue(textWanted);
         var keyBinding = by.binding(context.getCurrentPageInstance().getBindingByName(keyName));
         var elementFinder = element(keyBinding);
         _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
@@ -215,7 +219,8 @@ module.exports = function PageSteps() {
     */
     this.Then(/^I can see text "([^"]*)" at frame "([^"]*)"$/, function (valueObject, nameFrame, callback) {
         var _this = this;
-
+        valueObject = _this.generateValue(valueObject);
+        
         var keyBinding = by.css(context.getCurrentPageInstance().getContainerByName(nameFrame));
         var elementFinder = element(keyBinding);
 

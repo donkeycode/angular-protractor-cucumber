@@ -3,6 +3,7 @@ var context = require('../support/context');
 module.exports = function TableSteps() {
     this.Then(/^I can see "([^"]*)" for the first "([^"]*)" data$/, function(valueName, repeaterName, callback) {
         var _this = this;
+        valueName = _this.generateValue(valueName);
 
         var objectData = context.getCurrentPageInstance().getTableByRepeater(repeaterName);
         var searchBy = by.repeater(objectData.ngRepeat).row(0).column(objectData.columnKey);
@@ -29,6 +30,7 @@ module.exports = function TableSteps() {
      */
     this.Then(/^I see "([^"]*)" in the column "([^"]*)" of the row "([^"]*)" of the table "([^"]*)"$/, function (valueToMatch, columnToSearch, line, table, callback) {
         _this = this;
+        valueToMatch = _this.generateValue(valueToMatch);
 
         var mappedTable = context.getCurrentPageInstance().getTableByRepeater(table);
         var mappedColumn = context.getCurrentPageInstance().getColumnByName(columnToSearch);
