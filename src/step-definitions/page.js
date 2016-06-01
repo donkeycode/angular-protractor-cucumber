@@ -50,6 +50,50 @@ module.exports = function PageSteps() {
             _this.handleError(errorMessage, callback);
         });
     });
+    
+    /**
+     * See a diabled button
+     */
+    this.Then(/^I should see the button "([^"]*)" disabled$/, function (buttonName, callback) {
+        var _this = this;
+
+        var elementBinding = by.css(context.getCurrentPageInstance().getButtonByName(buttonName));
+        var elementFinder = element(elementBinding);
+
+        _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
+            elementFinder.isEnabled().then(function isDisplayedSuccess(isEnabled) {
+                if(!isEnabled) {
+                    return _this.delayCallback(callback);
+                }
+
+                _this.handleError("Button "+ buttonName +" present but enabled", callback);
+            });
+        }, function isPresentAndDisplayedError(errorMessage) {
+            _this.handleError(errorMessage, callback);
+        });
+    });
+
+    /**
+     * See an enabled button
+     */
+    this.Then(/^I should see the button "([^"]*)" enabled$/, function (buttonName, callback) {
+        var _this = this;
+
+        var elementBinding = by.css(context.getCurrentPageInstance().getButtonByName(buttonName));
+        var elementFinder = element(elementBinding);
+
+        _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
+            elementFinder.isEnabled().then(function isDisplayedSuccess(isEnabled) {
+                if(isEnabled) {
+                    return _this.delayCallback(callback);
+                }
+
+                _this.handleError("Button "+ buttonName +" present but enabled", callback);
+            });
+        }, function isPresentAndDisplayedError(errorMessage) {
+            _this.handleError(errorMessage, callback);
+        });
+    });
 
     /**
      * Not see a button
