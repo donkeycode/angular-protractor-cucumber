@@ -138,6 +138,29 @@ module.exports = function PageSteps() {
         context.loadPageInstance(pageName).then(function onPageLoaded(pageInstance) {
             context.setCurrentPageInstance(pageInstance);
 
+            if (browser.ignoreSynchronization) {
+                var iterate = 0;
+                var fn = function() {
+                    _this.validatePageUrl(pageInstance, function onSuccess() {
+                        _this.delayCallback(callback);
+                    }, function onError(message) {
+                        iterate++;
+
+                        if (iterate >= 10) {
+                            _this.handleError(message, callback);
+                        }
+
+                        setTimeout(function() {
+                            fn();
+                        }, 1000);
+                    });
+                };
+
+                fn();
+
+                return;
+            }
+
             _this.isOnPage(pageInstance, callback);
         });
     });
@@ -220,7 +243,7 @@ module.exports = function PageSteps() {
     this.Then(/^I can see text "([^"]*)" at frame "([^"]*)"$/, function (valueObject, nameFrame, callback) {
         var _this = this;
         valueObject = _this.generateValue(valueObject);
-        
+
         var keyBinding = by.css(context.getCurrentPageInstance().getContainerByName(nameFrame));
         var elementFinder = element(keyBinding);
 
