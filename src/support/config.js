@@ -24,6 +24,12 @@ module.exports = function Config() {
         delay: 5000,
 
         /**
+         * Delay for callbacks
+         * @type {number}
+         */
+        jenkins_delay: 500,
+
+        /**
          * Returns running env
          * @returns {string}
          */
@@ -55,7 +61,7 @@ module.exports = function Config() {
         getArgv: function(name) {
             var args = minimist(process.argv);
 
-            return args['cucumberOpts'][name];
+            return args[name];
         },
 
         /**
@@ -63,7 +69,11 @@ module.exports = function Config() {
          * @returns {number}
          */
         getDelay: function () {
-            return this.delay;
+          if (!this.isDev()) {
+            return this.jenkins_delay;
+          }
+
+          return this.delay;
         },
 
         /**

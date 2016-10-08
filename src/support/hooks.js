@@ -2,8 +2,8 @@ var context = require('./context');
 
 module.exports = function Hooks() {
 
-    this.BeforeFeature(function (event, callback) {
-        context.setCurrentFeature(event.getPayloadItem('feature'));
+    this.registerHandler('BeforeFeature', function (feature, callback) {
+        context.setCurrentFeature(feature);
 
         callback();
     });
@@ -11,7 +11,7 @@ module.exports = function Hooks() {
     /**
      * Clear database if mocked with HttpBackend
      */
-    this.AfterFeature(function (event, callback) {
+    this.registerHandler('AfterFeature', function (feature, callback) {
         if (context.database) {
             context.database.clear();
             context.database = null;
@@ -20,14 +20,14 @@ module.exports = function Hooks() {
         callback();
     });
 
-    this.BeforeScenario(function (event, callback) {
-        context.setCurrentScenario(event.getPayloadItem('scenario'));
+    this.registerHandler('BeforeScenario', function (scenario, callback) {
+        context.setCurrentScenario(scenario);
 
         callback();
     });
 
-    this.BeforeStep(function (event, callback) {
-        context.setCurrentStep(event.getPayloadItem('step'));
+    this.registerHandler('BeforeStep', function (step, callback) {
+        context.setCurrentStep(step);
 
         callback();
     });

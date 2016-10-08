@@ -8,7 +8,7 @@ var dataGenerator = require('./helper/data-generator');
 
 module.exports = function () {
 
-    this.World = function World(callback) {
+    this.World = function World() {
 
         /**
          * Check if an element is present and visible
@@ -113,13 +113,7 @@ module.exports = function () {
         this.delayCallback = function (callback) {
             var _this = this;
 
-            if (config.isDev()) {
-                setTimeout(callback, config.getDelay());
-
-                return _this;
-            }
-
-            callback();
+            setTimeout(callback, config.getDelay());
 
             return _this;
         };
@@ -146,7 +140,7 @@ module.exports = function () {
                 pngStream.end();
 
                 _this.delayCallback(function handleErrorCallback() {
-                    callback.fail(new Error(error));
+                    callback(new Error(error));
                 });
             });
 
@@ -165,8 +159,5 @@ module.exports = function () {
 
             return eval(functionToCall);
         };
-
-        // tell Cucumber we're finished and to use 'this' as the world instance
-        callback();
     };
 };

@@ -42,7 +42,6 @@ module.exports = function Context() {
          */
         loadPageInstance: function (pageName) {
             var deffered = $q.defer();
-
             glob(process.cwd() + '/test/e2e/support/pages/**/' + pageName+".js", {}, function (er, files) {
                 if (files.length === 0) {
                     deffered.reject("Page "+pageName+" not found !");

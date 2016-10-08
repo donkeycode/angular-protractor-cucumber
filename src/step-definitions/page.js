@@ -220,7 +220,7 @@ module.exports = function PageSteps() {
     this.Then(/^I can see text "([^"]*)" at frame "([^"]*)"$/, function (valueObject, nameFrame, callback) {
         var _this = this;
         valueObject = _this.generateValue(valueObject);
-        
+
         var keyBinding = by.css(context.getCurrentPageInstance().getContainerByName(nameFrame));
         var elementFinder = element(keyBinding);
 
