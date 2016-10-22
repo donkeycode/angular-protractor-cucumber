@@ -1,6 +1,13 @@
 var context = require('../support/context');
 
 module.exports = function PageSteps() {
+    this.Then(/^I wait ([^"]*) seconds$/, function (time, callback) {
+        var _this = this;
+        setTimeout(function() {
+          _this.delayCallback(callback)
+        }, time * 1000);
+    });
+
     /**
      * Try go to the given page
      */
