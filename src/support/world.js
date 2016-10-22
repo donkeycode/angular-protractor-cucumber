@@ -47,6 +47,26 @@ module.exports = function () {
         this.visit = function (pageInstancePromise, params, callback) {
             var _this = this;
 
+            this.tryVisit(pageInstancePromise, params, function (pageInstance) {
+                _this.isOnPage(pageInstance, callback);
+            }, false);
+
+            return _this;
+        };
+
+        /**
+         * try Visit the given page without check is on page
+         * @param {Promise} pageInstancePromise
+         * @param {object} params
+         * @param {function} callback
+         * @returns {exports}
+         */
+        this.tryVisit = function (pageInstancePromise, params, callback, simpleCallback) {
+            var _this = this;
+            if (simpleCallback === undefined) {
+              simpleCallback = true;
+            }
+
             pageInstancePromise.then(function onPageLoaded(pageInstance) {
 
                 var finalUrl = pageInstance.url;
@@ -64,7 +84,13 @@ module.exports = function () {
 
                     // we had test-mode class on body for specifics CSS rules (i.e. hide relative footer)
                     browser.executeScript('document.querySelector("body").classList.add("test-mode");').then(function () {
-                        _this.isOnPage(pageInstance, callback);
+                        _this.delayCallback(function () {
+                          if (!simpleCallback) {
+                            return callback(pageInstance);
+                          }
+
+                          callback();
+                        });
                     });
                 });
             });
