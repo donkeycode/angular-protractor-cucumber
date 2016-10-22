@@ -2,6 +2,13 @@ var context = require('../support/context');
 
 module.exports = function PageSteps() {
     /**
+     * Try go to the given page
+     */
+    this.Given(/^I try visit the page "([^"]*)"$/, function (pageName, callback) {
+        this.tryVisit(context.loadPageInstance(pageName), {}, callback);
+    });
+
+    /**
      * Redirect to the given page
      */
     this.Given(/^I am on the "([^"]*)"$/, function (pageName, callback) {
