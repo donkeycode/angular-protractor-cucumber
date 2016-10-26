@@ -64,6 +64,14 @@ module.exports = function () {
         };
 
         /**
+         * Refresh the current url
+         * @returns {null}
+         */
+        this.refresh = function () {
+          browser.driver.navigate().refresh();
+        };
+
+        /**
          * try Visit the given page without check is on page
          * @param {Promise} pageInstancePromise
          * @param {object} params
