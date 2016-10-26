@@ -23,6 +23,14 @@ module.exports = function PageSteps() {
     });
 
     /**
+     * Redirect to the given page changing base url
+     */
+    this.Given(/^I am on the "([^"]*)" of the url "([^"]*)"$/, function (pageName, pageBaseUrl, callback) {
+        this.changeBaseUrl(pageBaseUrl);
+        this.visit(context.loadPageInstance(pageName), {}, callback);
+    });
+
+    /**
      * Redirect to the given page
      */
     this.Given(/^I am on the "([^"]*)" of ([a-z0-9]+) "([^"]*)"$/, function (pageName, objectName, param, callback) {

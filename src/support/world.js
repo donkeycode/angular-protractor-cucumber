@@ -55,6 +55,15 @@ module.exports = function () {
         };
 
         /**
+         * Change the default base Url
+         * @param {string} newUrl
+         * @returns {null}
+         */
+        this.changeBaseUrl = function (newUrl) {
+          browser.baseUrl = newUrl;
+        };
+
+        /**
          * try Visit the given page without check is on page
          * @param {Promise} pageInstancePromise
          * @param {object} params
