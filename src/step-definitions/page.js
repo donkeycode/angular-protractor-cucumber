@@ -69,6 +69,25 @@ module.exports = function PageSteps() {
     });
 
     /**
+     * Click on a button and accept the popup
+     */
+    this.When(/^I click on the button "([^"]*)" and accept the popup$/, function (buttonName, callback) {
+        var _this = this;
+
+        var elementBinding = by.css(context.getCurrentPageInstance().getButtonByName(buttonName));
+        var elementFinder = element(elementBinding);
+
+        _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
+            elementFinder.click().then(function elementClickSuccess() {
+                browser.switchTo().alert().accept();
+                _this.delayCallback(callback);
+            });
+        }, function isPresentAndDisplayedError(errorMessage) {
+            _this.handleError(errorMessage, callback);
+        });
+    });
+
+    /**
      * See a button
      */
     this.Then(/^I should see the button "([^"]*)"$/, function (buttonName, callback) {
