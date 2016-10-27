@@ -60,7 +60,7 @@ module.exports = function () {
          * @returns {null}
          */
         this.changeBaseUrl = function (newUrl) {
-          browser.baseUrl = newUrl;
+            browser.baseUrl = newUrl;
         };
 
         /**
@@ -68,7 +68,7 @@ module.exports = function () {
          * @returns {null}
          */
         this.refresh = function () {
-          browser.driver.navigate().refresh();
+            return browser.driver.navigate().refresh();
         };
 
         /**

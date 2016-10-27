@@ -19,8 +19,10 @@ module.exports = function PageSteps() {
      * Refresh the current Url
      */
     this.Given(/^I refresh the page$/, function (callback) {
-        this.refresh();
-        this.delayCallback(callback);
+        var _this = this;
+        this.refresh().then(function(){
+            _this.delayCallback(callback);
+        });
     });
 
     /**
