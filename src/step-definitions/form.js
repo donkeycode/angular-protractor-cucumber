@@ -34,18 +34,25 @@ module.exports = function FormSteps() {
 
         _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
             elementFinder.click().then(function elementClickSuccess() {
-                elementFinder.all(by.css('option')).each(function forEarchOption(option) {
-                    option.getText().then(function getTextSuccess(textOption){
-                        if (textOption === value){
-                            option.click().then(function elementClickSuccess() {
-                                _this.delayCallback(callback);
-                            });
-                        }
-                    });
-                }, function allOptionsError(errorMessage){
-                    _this.handleError("Not found '" + selectBox + "' select box options", callback);
+                elementFinder.all(by.css('option')).then(function getOptions(options) {
+                  var nbOptions = options.length;
+                  var textOptions = '';
+                  elementFinder.all(by.css('option')).each(function forEarchOption(option, index) {
+                      option.getText().then(function getTextSuccess(textOption){
+                          textOptions += "'" + textOption + "', ";
+                          if (textOption === value){
+                              option.click().then(function elementClickSuccess() {
+                                  _this.delayCallback(callback);
+                              });
+                          }
+                          if (index + 1 == nbOptions) {
+                            _this.handleError("Not found '" + value + "' value in select box options : " + textOptions, callback);
+                          }
+                      });
+                  }, function allOptionsError(errorMessage){
+                      _this.handleError("Not found '" + selectBox + "' select box options", callback);
+                  });
                 });
-
             });
         }, function isPresentAndDisplayedError(errorMessage) {
             _this.handleError(errorMessage, callback);
