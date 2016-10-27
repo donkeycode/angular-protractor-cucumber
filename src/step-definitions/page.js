@@ -69,6 +69,35 @@ module.exports = function PageSteps() {
     });
 
     /**
+     * Click on a button and accept/dismiss the popup
+     */
+    this.When(/^I click on the button "([^"]*)" and ([^"]*) the popup$/, function (buttonName, action, callback) {
+        var _this = this;
+
+        var elementBinding = by.css(context.getCurrentPageInstance().getButtonByName(buttonName));
+        var elementFinder = element(elementBinding);
+
+        _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
+            elementFinder.click().then(function elementClickSuccess() {
+                if (action !== "accept" && action !== "dismiss") {
+                    browser.switchTo().alert().dismiss();
+                    _this.handleError("Action " + action + " unknown", callback);
+                    return;
+                }
+                if (action === "accept") {
+                    browser.switchTo().alert().accept();
+                }
+                if (action === "dismiss") {
+                    browser.switchTo().alert().dismiss();
+                }
+                _this.delayCallback(callback);
+            });
+        }, function isPresentAndDisplayedError(errorMessage) {
+            _this.handleError(errorMessage, callback);
+        });
+    });
+
+    /**
      * See a button
      */
     this.Then(/^I should see the button "([^"]*)"$/, function (buttonName, callback) {
