@@ -25,8 +25,9 @@ module.exports = function PageSteps() {
     /**
      * Redirect to the given page changing base url
      */
-    this.Given(/^I am on the "([^"]*)" of the url "([^"]*)"$/, function (pageName, pageBaseUrl, callback) {
-        this.changeBaseUrl(pageBaseUrl);
+    this.Given(/^I am on the "([^"]*)" of the domain "([^"]*)"$/, function (pageName, pageBaseDomain, callback) {
+        var helper = require(process.cwd() + '/test/e2e/support/helper/model/domain');
+        this.changeBaseUrl(helper.get(pageBaseDomain));
         this.visit(context.loadPageInstance(pageName), {}, callback);
     });
 
