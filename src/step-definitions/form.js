@@ -35,10 +35,9 @@ module.exports = function FormSteps() {
         _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
             elementFinder.click().then(function elementClickSuccess() {
                 elementFinder.all(by.css('option')).then(function getOptions(options) {
-                  var i = 0;
                   var nbOptions = options.length;
                   var textOptions = '';
-                  elementFinder.all(by.css('option')).each(function forEarchOption(option) {
+                  elementFinder.all(by.css('option')).each(function forEarchOption(option, index) {
                       option.getText().then(function getTextSuccess(textOption){
                           textOptions += "'" + textOption + "', ";
                           if (textOption === value){
@@ -46,9 +45,7 @@ module.exports = function FormSteps() {
                                   _this.delayCallback(callback);
                               });
                           }
-
-                          i++;
-                          if (i == nbOptions) {
+                          if (index + 1 == nbOptions) {
                             _this.handleError("Not found '" + value + "' value in select box options : " + textOptions, callback);
                           }
                       });
