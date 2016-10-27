@@ -60,7 +60,15 @@ module.exports = function () {
          * @returns {null}
          */
         this.changeBaseUrl = function (newUrl) {
-          browser.baseUrl = newUrl;
+            browser.baseUrl = newUrl;
+        };
+
+        /**
+         * Refresh the current url
+         * @returns {null}
+         */
+        this.refresh = function () {
+            return browser.driver.navigate().refresh();
         };
 
         /**
