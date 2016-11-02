@@ -136,7 +136,7 @@ module.exports = function () {
                     }
                 }
 
-                var urlReg = new RegExp('^' + pageInstance.url.replace(/:[^\/]+/g, '(.+)').replace(/\//g, '\\/') + '$');
+                var urlReg = new RegExp('^' + pageInstance.url.replace(/:[^\/]+/g, '(.+)').replace(/\//g, '\\/').replace("?", "\\?") + '$');
 
                 if (urlReg.test(splittedUrl[1]) === true) {
                     _this.delayCallback(callback);
