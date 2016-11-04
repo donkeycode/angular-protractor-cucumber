@@ -296,4 +296,27 @@ module.exports = function PageSteps() {
 
     });
 
+    /**
+     * scroll down
+     */
+    this.When(/^I scroll (down|up)$/, function (direction, callback) {
+      var _this = this;
+      if (direction === 'down') {
+        browser.executeScript('window.scrollTo(0,100000);');
+      } else {
+        browser.executeScript('window.scrollTo(0,0);');
+      }
+      _this.delayCallback(callback);
+    });
+
+    /**
+     * scroll down
+     */
+    this.When(/^I scroll to "([^"]*)"$/, function (element, callback) {
+      var _this = this;
+      var location = context.getCurrentPageInstance().getLocationByName(element);
+      browser.executeScript('window.scrollTo(' + location.x + ',' + location.y+ ');');
+      _this.delayCallback(callback);
+    });
+
 };
