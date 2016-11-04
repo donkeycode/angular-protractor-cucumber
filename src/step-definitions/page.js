@@ -296,4 +296,13 @@ module.exports = function PageSteps() {
 
     });
 
+    /**
+     * scroll down
+     */
+    this.When(/^I scroll down$/, function (callback) {
+      var _this = this;
+      browser.executeScript('window.scrollTo(0,100000);');
+      _this.delayCallback(callback);
+    });
+
 };
