@@ -249,6 +249,35 @@ module.exports = function PageSteps() {
             _this.handleError(errorMessage, callback);
         });
     });
+    
+    /**
+    * Check content iframe
+    */
+    this.Then(/^I can see "([^"]*)" in element "([^"]*)" in iframe "([^"]*)"$/, function (valueObject, nameElement, iframeElement, callback) {
+        var _this = this;
+        valueObject = _this.generateValue(valueObject);
+        browser.ignoreSynchronization = true;
+
+        var iframe = by.css(context.getCurrentPageInstance().getIframeByName(iframeElement));
+        element(iframe).getWebElement().then(function(frame) {
+          browser.switchTo().frame(frame);
+
+          var keyBinding = by.css(context.getCurrentPageInstance().getElementByName(nameElement));
+          var elementFinder = element(keyBinding);
+
+          _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
+              elementFinder.getText().then(function (contentField) {
+                  if (contentField === valueObject) {
+                      _this.delayCallback(callback);
+                  } else {
+                      _this.handleError("contentField and valueObject doesn't match. contentField: " + contentField + ", valueObject: " + valueObject + ", Binding: " + JSON.stringify(keyBinding) + ", currentPageInstance.url: " + context.getCurrentPageInstance().url, callback);
+                  }
+              });
+          }, function isPresentAndDisplayedError(errorMessage) {
+              _this.handleError(errorMessage, callback);
+          });
+        });
+    });
 
     /**
     * Check content page with binding

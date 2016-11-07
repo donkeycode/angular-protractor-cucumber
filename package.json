@@ -1,6 +1,6 @@
 {
   "name": "angular-protractor-cucumber",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "A collection of sentences for cucumber js",
   "main": "index.js",
   "scripts": {
