@@ -262,10 +262,10 @@ module.exports = function PageSteps() {
 
         _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
             elementFinder.getAttribute('value').then(function (value) {
-                if (contentField === valueObject) {
+                if (value === valueObject) {
                     _this.delayCallback(callback);
                 } else {
-                    _this.handleError("contentField and valueObject doesn't match. contentField: " + contentField + ", valueObject: " + valueObject + ", Binding: " + JSON.stringify(keyBinding) + ", currentPageInstance.url: " + context.getCurrentPageInstance().url, callback);
+                    _this.handleError("contentField and valueObject doesn't match. value: " + value + ", valueObject: " + valueObject + ", Binding: " + JSON.stringify(keyBinding) + ", currentPageInstance.url: " + context.getCurrentPageInstance().url, callback);
                 }
             });
         }, function isPresentAndDisplayedError(errorMessage) {
