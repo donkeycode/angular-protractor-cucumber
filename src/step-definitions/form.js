@@ -79,6 +79,25 @@ module.exports = function FormSteps() {
     });
 
     /**
+     * Put value for the time field
+     */
+    this.When(/^I fill "([^"]*)" time field with "([^"]*)"$/, function (fieldName, fieldValue, callback) {
+        var _this = this;
+
+        var fieldIdSelector = context.getCurrentPageInstance().getFieldByName(fieldName);
+        var elementFinder = element(by.css(fieldIdSelector));
+
+        _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
+            elementFinder.sendKeys(_this.generateValue(fieldValue)).then(function(){
+                _this.delayCallback(callback);
+            });
+
+        }, function isPresentAndDisplayedError(errorMessage) {
+            _this.handleError(errorMessage, callback);
+        });
+    });
+    
+    /**
      * Put value for the timepicker
      */
     this.When(/^I fill "([^"]*)" datepicker with "([^"]*)"$/, function (fieldName, fieldValue, callback) {
