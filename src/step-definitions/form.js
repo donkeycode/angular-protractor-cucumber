@@ -77,6 +77,32 @@ module.exports = function FormSteps() {
             _this.handleError(errorMessage, callback);
         });
     });
+    
+    /**
+     * Put value for the field in iframe
+     */
+    this.When(/^I fill "([^"]*)" field with "([^"]*)" in iframe "([^"]*)"$/, function (fieldName, fieldValue, iframeElement, callback) {
+        var _this = this;
+        browser.ignoreSynchronization = true;
+
+        var fieldIdSelector = context.getCurrentPageInstance().getFieldByName(fieldName);
+        var elementFinder = element(by.css(fieldIdSelector));
+
+        var iframe = by.css(context.getCurrentPageInstance().getIframeByName(iframeElement));
+        element(iframe).getWebElement().then(function(frame) {
+          browser.switchTo().frame(frame);
+
+          _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
+            elementFinder.clear().sendKeys(_this.generateValue(fieldValue)).then(function(){
+                browser.switchTo().defaultContent();
+                _this.delayCallback(callback);
+            });
+
+        }, function isPresentAndDisplayedError(errorMessage) {
+            _this.handleError(errorMessage, callback);
+        });
+      });
+    });
 
     /**
      * Put value for the timepicker
