@@ -237,6 +237,9 @@ module.exports = function PageSteps() {
         var keyBinding = by.css(context.getCurrentPageInstance().getElementByName(nameElement));
         var elementFinder = element(keyBinding);
 
+        // escape double quotes
+        valueObject = valueObject.replace(/''/g, '"');
+
         _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
             elementFinder.getText().then(function (contentField) {
                 if (contentField === valueObject) {
