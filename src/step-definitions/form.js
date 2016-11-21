@@ -103,6 +103,17 @@ module.exports = function FormSteps() {
         });
       });
     });
+    
+    /**
+     * Put value for a ckeditor
+     */
+    this.When(/^I fill "([^"]*)" ckeditor field with "([^"]*)"$/, function (fieldName, fieldValue, callback) {
+        var fieldSelector = context.getCurrentPageInstance().getFieldByName(fieldName);
+        var _this = this;
+        var script = "CKEDITOR.instances." + fieldSelector + ".setData('" + fieldValue + "')";
+        browser.executeScript(script);
+        _this.delayCallback(callback);
+    });
 
     /**
      * Put value for the timepicker
