@@ -367,11 +367,15 @@ module.exports = function PageSteps() {
     /**
      * scroll down
      */
-    this.When(/^I scroll to "([^"]*)"$/, function (element, callback) {
+    this.When(/^I scroll to "([^"]*)"$/, function (elementClass, callback) {
       var _this = this;
-      var location = context.getCurrentPageInstance().getLocationByName(element);
-      browser.executeScript('window.scrollTo(' + location.x + ',' + location.y+ ');');
-      _this.delayCallback(callback);
+      var location = context.getCurrentPageInstance().getLocationByName(elementClass);
+      var elementFinder = element(by.css(location));
+
+      elementFinder.getLocation().then(function locate(elementLocation) {
+        browser.executeScript('window.scrollTo(' + elementLocation.x + ',' + elementLocation.y + ');');
+        _this.delayCallback(callback);
+      });
     });
 
     /**
