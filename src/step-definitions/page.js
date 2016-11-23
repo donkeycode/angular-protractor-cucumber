@@ -382,6 +382,22 @@ module.exports = function PageSteps() {
     /**
      *  Check if element is present
      */
+    this.Then(/^I should see element "([^"]*)"$/, function (elementClass, callback) {
+        var _this = this;
+        var mappedElement = context.getCurrentPageInstance().getElementByClass(elementClass);
+
+        var elementFinder = element(by.css(mappedElement));
+
+        _this.isPresentAndDisplayed(elementFinder).then(function isPresent() {
+            _this.delayCallback(callback);
+        }, function isNotPresent() {
+            _this.handleError("Element '" + mappedElement + "' is present", callback);
+        });
+    });
+
+    /**
+     *  Check if element is present
+     */
     this.Then(/^I should not see element "([^"]*)"$/, function (elementClass, callback) {
         var _this = this;
         var mappedElement = context.getCurrentPageInstance().getElementByClass(elementClass);
