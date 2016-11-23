@@ -275,7 +275,7 @@ module.exports = function PageSteps() {
             _this.handleError(errorMessage, callback);
         });
     });
-    
+
     /**
     * Check content iframe
     */
@@ -373,6 +373,7 @@ module.exports = function PageSteps() {
       var elementFinder = element(by.css(location));
 
       elementFinder.getLocation().then(function locate(elementLocation) {
+        browser.executeScript('window.scrollTo(0, 0);');
         browser.executeScript('window.scrollTo(' + elementLocation.x + ',' + elementLocation.y + ');');
         _this.delayCallback(callback);
       });
