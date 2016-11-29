@@ -114,6 +114,30 @@ module.exports = function FormSteps() {
         browser.executeScript(script);
         _this.delayCallback(callback);
     });
+    
+    /**
+     * Check value in a ckeditor
+     */
+    this.Then(/^I can see "([^"]*)" in ckeditor "([^"]*)"$/, function (valueObject, fieldName, callback) {
+      var fieldSelector = context.getCurrentPageInstance().getFieldByName(fieldName);
+      var _this = this;
+
+      function getCkeditorData(fieldSelector) {
+        return CKEDITOR.instances[fieldSelector].getData();
+      }
+
+      browser.executeScript(getCkeditorData, fieldSelector).then(function isPresentAndDisplayedSuccess(contentField) {
+          // remove new lines
+          contentField = contentField.replace(/(\r\n|\n|\r)/gm,"");
+          if (contentField === valueObject) {
+              _this.delayCallback(callback);
+          } else {
+              _this.handleError("contentField and valueObject doesn't match. contentField: " + contentField + ", valueObject: " + valueObject + ", currentPageInstance.url: " + context.getCurrentPageInstance().url, callback);
+          }
+        }, function isPresentAndDisplayedError(errorMessage) {
+            _this.handleError(errorMessage, callback);
+        });
+    });
 
     /**
      * Put value for the time field
