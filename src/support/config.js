@@ -27,7 +27,7 @@ module.exports = function Config() {
          * Delay for callbacks
          * @type {number}
          */
-        jenkins_delay: 500,
+        jenkins_delay: 100,
 
         /**
          * Returns running env
