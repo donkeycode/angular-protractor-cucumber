@@ -69,6 +69,10 @@ module.exports = function Config() {
          * @returns {number}
          */
         getDelay: function () {
+          if (!!this.getArgv('delay')) {
+            return this.getArgv('delay');
+          }
+
           if (!this.isDev()) {
             return this.jenkins_delay;
           }
