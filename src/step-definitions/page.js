@@ -79,18 +79,21 @@ module.exports = function PageSteps() {
 
         _this.isPresentAndDisplayed(elementFinder).then(function isPresentAndDisplayedSuccess() {
             elementFinder.click().then(function elementClickSuccess() {
-                if (action !== "accept" && action !== "dismiss") {
-                    browser.switchTo().alert().dismiss();
-                    _this.handleError("Action " + action + " unknown", callback);
-                    return;
-                }
-                if (action === "accept") {
-                    browser.switchTo().alert().accept();
-                }
-                if (action === "dismiss") {
-                    browser.switchTo().alert().dismiss();
-                }
-                _this.delayCallback(callback);
+                // thread sleep before switch
+                setTimeout(function() {
+                    if (action !== "accept" && action !== "dismiss") {
+                        browser.switchTo().alert().dismiss();
+                        _this.handleError("Action " + action + " unknown", callback);
+                        return;
+                    }
+                    if (action === "accept") {
+                        browser.switchTo().alert().accept();
+                    }
+                    if (action === "dismiss") {
+                        browser.switchTo().alert().dismiss();
+                    }
+                    _this.delayCallback(callback);
+                }, 200);
             });
         }, function isPresentAndDisplayedError(errorMessage) {
             _this.handleError(errorMessage, callback);
