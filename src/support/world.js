@@ -124,6 +124,16 @@ module.exports = function () {
         this.isOnPage = function (pageInstance, callback) {
             var _this = this;
 
+            this.validatePageUrl(pageInstance, function onSuccess() {
+                _this.delayCallback(callback);
+            }, function onError(message) {
+                _this.handleError(message, callback);
+            });
+
+            return _this;
+        };
+
+        this.validatePageUrl = function(pageInstance, successCallback, errorCallback) {
             browser.getCurrentUrl().then(function (url) {
                 var splittedUrl = url.split("/#/");
 
@@ -139,13 +149,11 @@ module.exports = function () {
                 var urlReg = new RegExp('^' + pageInstance.url.replace(/:[^\/]+/g, '(.+)').replace(/\//g, '\\/').replace("?", "\\?") + '$');
 
                 if (urlReg.test(splittedUrl[1]) === true) {
-                    _this.delayCallback(callback);
+                    successCallback()
                 } else {
-                    _this.handleError("isOnPage fails, pageInstance.url: " + pageInstance.url + ", url: " + url + ", splittedUrl: " + splittedUrl[1] + ", RegExp: " + urlReg.toString(), callback);
+                    errorCallback("isOnPage fails, pageInstance.url: " + pageInstance.url + ", url: " + url + ", splittedUrl: " + splittedUrl[1] + ", RegExp: " + urlReg.toString());
                 }
             });
-
-            return _this;
         };
 
         /**
